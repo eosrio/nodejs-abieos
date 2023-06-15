@@ -2,3 +2,6 @@
 .DS_Store
 build
 build2
+node_modules
+*.log
+.idea
