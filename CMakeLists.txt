@@ -45,9 +45,7 @@ if(ABIEOS_NO_INT128)
 target_compile_definitions(abieos PUBLIC ABIEOS_NO_INT128)
 endif()
 
-add_library(${PROJECT_NAME} SHARED src/main.cpp src/abieos.cpp)
-
-add_library(abieos_module MODULE src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
+add_library(abieos_module MODULE  src/main.cpp src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
 target_include_directories(abieos_module PUBLIC
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include;"
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/external/rapidjson/include"
@@ -55,6 +53,15 @@ target_include_directories(abieos_module PUBLIC
 
 target_link_libraries(abieos_module ${CMAKE_THREAD_LIBS_INIT})
 set_target_properties(abieos_module PROPERTIES OUTPUT_NAME "abieos")
+
+set_target_properties(abieos_module PROPERTIES PREFIX "" SUFFIX ".node")
+target_link_libraries(abieos_module ${CMAKE_JS_LIB};abieos;${CMAKE_THREAD_LIBS_INIT})
+target_compile_options(abieos_module PRIVATE -Wall -Wextra -Wno-unused-parameter)
+
+execute_process(COMMAND node -p "require('node-addon-api').include" WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} OUTPUT_VARIABLE NODE_ADDON_API_DIR)
+string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
 
 enable_testing()
 
