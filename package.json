@@ -8,7 +8,7 @@
     "install": "node -e 'process.exit(0)'",
     "test": "cd examples && node basic.js",
     "tsc:watch": "tsc --watch",
-    "build:linux": "cmake-js compile --cc /usr/bin/clang --cxx /usr/bin/clang++ && cp -F build/Release/node_abieos.node dist/abieos.node",
+    "build:linux": "cmake-js compile --cc /usr/bin/clang --cxx /usr/bin/clang++ && cp -f build/Release/node_abieos.node dist/abieos.node",
     "build:win": "cmake-js"
   },
   "type": "module",
