@@ -56,7 +56,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
                           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "abieos")
+# set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "abieos")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB};abieos;${CMAKE_THREAD_LIBS_INIT})
