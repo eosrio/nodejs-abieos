@@ -51,13 +51,13 @@ endif()
 
 set_target_properties(abieos PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(${PROJECT_NAME} MODULE  src/main.cpp src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
+add_library(${PROJECT_NAME} MODULE src/main.cpp src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
 target_include_directories(${PROJECT_NAME} PUBLIC
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include;"
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/external/rapidjson/include"
                           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
 
-target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
+# target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 # set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "abieos")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
