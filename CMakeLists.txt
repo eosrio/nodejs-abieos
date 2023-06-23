@@ -51,7 +51,7 @@ endif()
 
 set_target_properties(abieos PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(${PROJECT_NAME} MODULE src/main.cpp src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
+add_library(${PROJECT_NAME} MODULE src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c src/main.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include;"
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/external/rapidjson/include"
@@ -62,7 +62,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB};abieos;${CMAKE_THREAD_LIBS_INIT})
-# target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wno-unused-parameter)
+target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wno-unused-parameter)
 
 execute_process(COMMAND node -p "require('node-addon-api').include" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE NODE_ADDON_API_DIR)
 string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
