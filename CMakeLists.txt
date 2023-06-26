@@ -51,11 +51,17 @@ endif()
 
 set_target_properties(abieos PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
+execute_process(COMMAND node -p "require('node-api-headers').include_dir" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE NODE_API_HEADERS_DIR)
+string(REPLACE "\n" "" NODE_API_HEADERS_DIR ${NODE_API_HEADERS_DIR})
+string(REPLACE "\"" "" NODE_API_HEADERS_DIR ${NODE_API_HEADERS_DIR})
+
 add_library(${PROJECT_NAME} MODULE src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c src/main.cpp)
 target_include_directories(${PROJECT_NAME} PUBLIC
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include;"
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/external/rapidjson/include"
                           "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_API_HEADERS_DIR})
 
 # target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
 # set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "abieos")
