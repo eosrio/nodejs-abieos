@@ -7,6 +7,7 @@ let modulePath = "../dist/abieos.node";
 let abieos: any | null = null;
 // if (process.platform === 'linux') {
     abieos = req(modulePath);
+console.log(abieos);
 // } else
 if (process.platform === 'win32') {
     // throw new Error(`${process.platform} is not supported by node-abieos`);
