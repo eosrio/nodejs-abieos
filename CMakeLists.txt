@@ -3,6 +3,7 @@
 cmake_minimum_required (VERSION 3.8)
 project(node_abieos VERSION 3.0 LANGUAGES CXX C)
 
+# add_definitions(-DNAPI_VERSION=7)
 add_definitions(-DNAPI_VERSION=8)
 
 include_directories(${CMAKE_JS_INC})
@@ -51,7 +52,7 @@ endif()
 
 set_target_properties(abieos PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
-add_library(${PROJECT_NAME} MODULE src/abieos.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c src/main.cpp)
+add_library(${PROJECT_NAME} SHARED src/abieos.cpp src/main.cpp src/abi.cpp src/crypto.cpp include/eosio/fpconv.c)
 target_include_directories(${PROJECT_NAME} PUBLIC
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/include;"
                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>/external/rapidjson/include"
@@ -64,7 +65,7 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB};abieos;${CMAKE_THREAD_LIBS_INIT})
 target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wno-unused-parameter)
 
-execute_process(COMMAND node -p "require('node-addon-api').include" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE NODE_ADDON_API_DIR)
+execute_process(COMMAND node -p "require('node-addon-api').include_dir" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} OUTPUT_VARIABLE NODE_ADDON_API_DIR)
 string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
 target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
