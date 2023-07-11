@@ -9,7 +9,7 @@
     "test": "cd examples && node basic.js",
     "tsc:watch": "tsc --watch",
     "build:linux": "cmake-js --arch x64 compile --cc /usr/bin/clang --cxx /usr/bin/clang++ && cp build/Release/node_abieos.node dist/abieos.node",
-    "build:macos": "cmake-js --arch arm64 compile",
+    "build:macos": "cmake-js --arch arm64 compile && cp build/Release/node_abieos.node dist/abieos.node",
     "build:win": "cmake-js"
   },
   "type": "module",
