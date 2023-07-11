@@ -12,7 +12,6 @@
     "build:macos": "cmake-js --arch arm64 compile && cp build/Release/node_abieos.node dist/abieos.node",
     "build:win": "cmake-js"
   },
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eosrio/node-abieos.git"
